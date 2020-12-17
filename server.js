@@ -38,6 +38,9 @@ app.post('/api/notes', (req, res) => {
     fs.writeFileSync(__dirname + '/db/db.json', JSON.stringify(noteArray), err => {
         if (err) throw err;
     });
+    res.sendFile(__dirname + '/db/db.json', err => {
+        if (err) throw err;
+    });
 });
 
 app.delete('/api/notes/:id', (req, res) => {
@@ -47,6 +50,9 @@ app.delete('/api/notes/:id', (req, res) => {
         note.id = i + 1;
     });
     fs.writeFileSync(__dirname + '/db/db.json', JSON.stringify(noteArray), err => {
+        if (err) throw err;
+    });
+    res.sendFile(__dirname + '/db/db.json', err => {
         if (err) throw err;
     });
 });
