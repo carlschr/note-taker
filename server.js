@@ -31,7 +31,13 @@ app.get('/api/notes', (req, res) => {
 });
 
 app.post('/api/notes', (req, res) => {
-
+    let newNote = req.body;
+    let noteArray = JSON.parse(fs.readFileSync(__dirname + '/db/db.json'));
+    newNote.id = noteArray.length + 1;
+    noteArray.push(newNote);
+    fs.writeFileSync(__dirname + '/db/db.json', JSON.stringify(noteArray), err => {
+        if (err) throw err;
+    });
 });
 
 app.delete('/api/notes/:id', (req, res) => {
