@@ -41,7 +41,14 @@ app.post('/api/notes', (req, res) => {
 });
 
 app.delete('/api/notes/:id', (req, res) => {
-
+    let noteArray = JSON.parse(fs.readFileSync(__dirname + '/db/db.json'));
+    noteArray.splice(req.params.id - 1, 1);
+    noteArray.forEach((note, i) => {
+        note.id = i + 1;
+    });
+    fs.writeFileSync(__dirname + '/db/db.json', JSON.stringify(noteArray), err => {
+        if (err) throw err;
+    });
 });
 
 app.listen(PORT, function(err){ 
